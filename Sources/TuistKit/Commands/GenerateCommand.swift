@@ -51,6 +51,12 @@ struct GenerateCommand: AsyncParsableCommand, HasTrackableParameters {
         help: "Ignore cached targets, and use their sources instead."
     )
     var ignoreCache: Bool = false
+    
+    @Flag(
+        name: [.customLong("only-resolved-versions")],
+        help: "Use only versions"
+    )
+    var onlyResolvedPackageVersions: Bool = false
 
     func runAsync() async throws {
         try await GenerateService().run(
@@ -59,7 +65,8 @@ struct GenerateCommand: AsyncParsableCommand, HasTrackableParameters {
             noOpen: noOpen,
             xcframeworks: xcframeworks,
             profile: profile,
-            ignoreCache: ignoreCache
+            ignoreCache: ignoreCache,
+            onlyResolvedPackageVersions: onlyResolvedPackageVersions
         )
         GenerateCommand.analyticsDelegate?.addParameters(
             [
@@ -70,6 +77,7 @@ struct GenerateCommand: AsyncParsableCommand, HasTrackableParameters {
                 "cacheable_targets": AnyCodable(CacheAnalytics.cacheableTargets),
                 "local_cache_target_hits": AnyCodable(CacheAnalytics.localCacheTargetsHits),
                 "remote_cache_target_hits": AnyCodable(CacheAnalytics.remoteCacheTargetsHits),
+                "only_resolved_package_versions": AnyCodable(onlyResolvedPackageVersions)
             ]
         )
     }

@@ -41,7 +41,8 @@ final class GenerateService {
         noOpen: Bool,
         xcframeworks: Bool,
         profile: String?,
-        ignoreCache: Bool
+        ignoreCache: Bool,
+        onlyResolvedPackageVersions: Bool
     ) async throws {
         let timer = clock.startTimer()
         let path = self.path(path)
@@ -52,7 +53,8 @@ final class GenerateService {
             sources: sources,
             xcframeworks: xcframeworks,
             cacheProfile: cacheProfile,
-            ignoreCache: ignoreCache
+            ignoreCache: ignoreCache,
+            onlyResolvedPackageVersions: onlyResolvedPackageVersions
         )
         let workspacePath = try await generator.generate(path: path)
         if !noOpen {

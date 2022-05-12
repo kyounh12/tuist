@@ -45,7 +45,8 @@ public class SwiftPackageManagerInteractor: SwiftPackageManagerInteracting {
         at path: AbsolutePath,
         workspaceName: String,
         config: Config,
-        graphTraverser: GraphTraversing
+        graphTraverser: GraphTraversing,
+        onlyResolvedPackageVersions: Bool
     ) async throws {
         guard !config.generationOptions.disablePackageVersionLocking,
               graphTraverser.hasRemotePackages
@@ -69,6 +70,10 @@ public class SwiftPackageManagerInteractor: SwiftPackageManagerInteracting {
         logger.notice("Resolving package dependencies using xcodebuild")
         // -list parameter is a workaround to resolve package dependencies for given workspace without specifying scheme
         var arguments = ["xcodebuild", "-resolvePackageDependencies"]
+        
+        if onlyUsePackageVersionsFromResolvedFile {
+            arguments.append("-onlyUsePackageVersionsFromResolvedFile")
+        }
 
         // This allows using the system-defined git credentials instead of using Xcode's accounts permissions
         if config.generationOptions.resolveDependenciesWithSystemScm {

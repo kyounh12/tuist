@@ -70,7 +70,8 @@ class GeneratorFactory: GeneratorFactorying {
         sources: Set<String>,
         xcframeworks: Bool,
         cacheProfile: TuistGraph.Cache.Profile,
-        ignoreCache: Bool
+        ignoreCache: Bool,
+        onlyResolvedPackageVersions: Bool
     ) -> Generating {
         let contentHasher = ContentHasher()
         let projectMapperFactory = ProjectMapperFactory(contentHasher: contentHasher)
@@ -93,7 +94,8 @@ class GeneratorFactory: GeneratorFactorying {
                 manifestLoader: manifestLoader,
                 workspaceMapper: SequentialWorkspaceMapper(mappers: workspaceMappers),
                 graphMapper: SequentialGraphMapper(graphMappers)
-            )
+            ),
+            onlyResolvedPackageVersions: onlyResolvedPackageVersions
         )
     }
 

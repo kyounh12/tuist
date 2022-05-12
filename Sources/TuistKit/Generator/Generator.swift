@@ -28,11 +28,13 @@ class Generator: Generating {
     private let sideEffectDescriptorExecutor: SideEffectDescriptorExecuting
     private let configLoader: ConfigLoading
     private let manifestGraphLoader: ManifestGraphLoading
+    private let onlyResolvedPackageVersions: Bool
     private var lintingIssues: [LintingIssue] = []
 
     init(
         manifestLoader: ManifestLoading,
-        manifestGraphLoader: ManifestGraphLoading
+        manifestGraphLoader: ManifestGraphLoading,
+        onlyResolvedPackageVersions: Bool
     ) {
         sideEffectDescriptorExecutor = SideEffectDescriptorExecutor()
         configLoader = ConfigLoader(
@@ -41,6 +43,7 @@ class Generator: Generating {
             fileHandler: FileHandler.shared
         )
         self.manifestGraphLoader = manifestGraphLoader
+        self.onlyResolvedPackageVersions = onlyResolvedPackageVersions
     }
 
     func generate(path: AbsolutePath) async throws -> AbsolutePath {
@@ -106,7 +109,8 @@ class Generator: Generating {
         try await swiftPackageManagerInteractor.install(
             graphTraverser: graphTraverser,
             workspaceName: workspaceName,
-            config: config
+            config: config,
+            onlyResolvedPackageVersions: onlyResolvedPackageVersions
         )
     }
 
