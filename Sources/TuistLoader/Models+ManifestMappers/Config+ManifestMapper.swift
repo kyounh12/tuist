@@ -52,7 +52,8 @@ extension TuistGraph.Config.GenerationOptions {
     static func from(manifest: ProjectDescription.Config.GenerationOptions) throws -> TuistGraph.Config.GenerationOptions {
         .init(
             resolveDependenciesWithSystemScm: manifest.resolveDependenciesWithSystemScm,
-            disablePackageVersionLocking: manifest.disablePackageVersionLocking
+            disablePackageVersionLocking: manifest.disablePackageVersionLocking,
+            onlyUsePackageVersionsFromResolvedFile: manifest.onlyUsePackageVersionsFromResolvedFile
         )
     }
 }
