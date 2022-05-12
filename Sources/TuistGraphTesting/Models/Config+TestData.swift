@@ -28,11 +28,13 @@ extension Config {
 extension Config.GenerationOptions {
     public static func test(
         resolveDependenciesWithSystemScm: Bool = false,
-        disablePackageVersionLocking: Bool = false
+        disablePackageVersionLocking: Bool = false,
+        onlyUsePackageVersionsFromResolvedFile: Bool = false
     ) -> Self {
         .init(
             resolveDependenciesWithSystemScm: resolveDependenciesWithSystemScm,
-            disablePackageVersionLocking: disablePackageVersionLocking
+            disablePackageVersionLocking: disablePackageVersionLocking,
+            onlyUsePackageVersionsFromResolvedFile: onlyUsePackageVersionsFromResolvedFile
         )
     }
 }
