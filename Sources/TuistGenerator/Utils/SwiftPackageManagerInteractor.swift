@@ -69,6 +69,10 @@ public class SwiftPackageManagerInteractor: SwiftPackageManagerInteracting {
         logger.notice("Resolving package dependencies using xcodebuild")
         // -list parameter is a workaround to resolve package dependencies for given workspace without specifying scheme
         var arguments = ["xcodebuild", "-resolvePackageDependencies"]
+        
+        if config.generationOptions.onlyUsePackageVersionsFromResolvedFile {
+            arguments.append("-onlyUsePackageVersionsFromResolvedFile")
+        }
 
         // This allows using the system-defined git credentials instead of using Xcode's accounts permissions
         if config.generationOptions.resolveDependenciesWithSystemScm {
